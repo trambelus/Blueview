@@ -59,11 +59,11 @@ def main():
 			# if it still didn't work, die
 			sys.exit("Could not set hci scan parameters")
 
-	err = ble.hci_le_set_scan_enable(s.fileno(), 1, 1, 1000)
+	err = ble.hci_le_set_scan_enable(sock.fileno(), 1, 1, 1000)
 
 	try:
 		while True:
-			packet = s.recv(1024)
+			packet = sock.recv(1024)
 
 			ptype, event, plen = struct.unpack("BBB", packet[:3])
 			if event == LE_META_EVENT:
