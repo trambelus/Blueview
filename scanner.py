@@ -3,6 +3,7 @@
 import socket
 import struct
 import os
+import sys
 from ctypes import CDLL, get_errno
 from ctypes.util import find_library
 import requests
@@ -75,7 +76,7 @@ def main():
 						# parse packet
 						mac_addr = ':'.join("{0:02x}".format(x).upper() for x in packet[12:6:-1])
 						uuid = pp(data[-22:-6])
-						
+
 						requests.post("http://trambel.us:83/blueview/data", data={"packet":pp(packet), "mac":mac_addr, "uuid":uuid})
 
 	except KeyboardInterrupt:
