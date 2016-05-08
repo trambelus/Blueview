@@ -53,8 +53,8 @@ def main():
 	err = lambda: ble.hci_le_set_scan_parameters(sock.fileno(), 0, 0x10, 0x10, 0, 0, 1000)
 	if err() < 0:
 		# reload the interface and try again
-		os.system("ifdown hci0")
-		os.system("ifup hci0")
+		os.system("hciconfig hci0 down")
+		os.system("hciconfig hci0 up")
 		if err() < 0:
 			# if it still didn't work, die
 			sys.exit("Could not set hci scan parameters")
@@ -81,8 +81,8 @@ def main():
 
 	except KeyboardInterrupt:
 		sock.close()
-		os.system("ifdown hci0")
-		os.system("ifup hci0")
+		os.system("hciconfig hci0 down")
+		os.system("hciconfig hci0 up")
 
 if __name__ == '__main__':
 	main()
