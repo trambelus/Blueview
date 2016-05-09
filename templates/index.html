@@ -11,11 +11,14 @@
 
 		<style>
 			body {
-				font: 10px sans-serif;
+				font: 15px monospace
+			}
+			html, body {
+				height: 100%;
 			}
 			#log {
-				height: 500px;
-				width: 500px;
+				height: 100%;
+				width: auto;
 				overflow: scroll;
 			}
 		</style>
@@ -59,14 +62,15 @@
 				url: "http://trambel.us:83/blueview/data",
 				complete: function(xhr) {
 					console.log("Updated");
-					var json = xhr.responseJSON;
+					var json = JSON.parse(xhr.responseText);
 					console.log(json);
 					$.each(json, function(index, elem) {
 						$("#log ul").append(
 							$('<li>').attr('class','list-group-item').append(
-								elem.packet
-							).style('color', color(elem.packet))
+								elem.mac + " - " + elem.uuid + " - " + elem.packet
+							).css('color', color(elem.mac))
 						);
+						tailScroll();
 					});
 					setTimeout(updateList, 100);
 				}
