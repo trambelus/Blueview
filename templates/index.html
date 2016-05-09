@@ -58,7 +58,9 @@
 			$.ajax({
 				url: "http://trambel.us:83/blueview/data",
 				complete: function(xhr) {
+					console.log("Updated");
 					var json = xhr.responseJSON;
+					console.log(json);
 					$.each(json, function(index, elem) {
 						$("#log ul").append(
 							$('<li>').attr('class','list-group-item').append(
