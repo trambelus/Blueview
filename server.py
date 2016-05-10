@@ -57,7 +57,7 @@ q = []
 
 @app.route('/blueview', methods=['GET'])
 def index():
-	return open('/templates/index.html','r').read()
+	return render_template('index.html')
 
 @app.route('/blueview/data', methods=['GET','POST'])
 @crossdomain(origin='*')
