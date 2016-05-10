@@ -38,6 +38,24 @@ def pp(data):
 		string += "%02x" % struct.unpack("B", data[i:i+1])[0]
 	return string
 
+# get company name from ID as string
+def getCompanyName(ID):
+    codes = {
+        '004c' : "Apple",
+        '011b' : "Aruba",
+        '00e0' : "Google",
+        '015d' : "Estimote",
+        'feaa' : "Eddystone"
+    }
+    if codes.get(ID) != None:
+        return codes.get(ID)
+    else:
+        return "Unknown"
+
+# reverse endianness - swap byte order
+def changeEndian(word):
+    return word[2:] + word[0:2]
+
 def main():
 	# define and establish socket connection
 	btlib = find_library("bluetooth")
@@ -77,10 +95,13 @@ def main():
 						# parse packet
 						mac_addr = ':'.join("{0:02x}".format(x).upper() for x in packet[12:6:-1])
 						uuid = pp(data[-22:-6])
+						manufacturer = getCompanyName(changeEndian(pp(data[15:17])))
 
 						print("Packet: {}\nMAC: {}\nUUID: {}".format(pp(packet), mac_addr, uuid))
 						try:
-							requests.post("http://trambel.us:83/blueview/data", data={"packet":pp(packet), "mac":mac_addr, "uuid":uuid})
+							requests.post("http://trambel.us:83/blueview/data", data={
+								"packet":pp(packet), "mac":mac_addr, "uuid":uuid,
+								"manufacturer":manufacturer})
 						except requests.exceptions.ConnectionError:
 							print("Connection error; stand by.")
 							time.sleep(2)

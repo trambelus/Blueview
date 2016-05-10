@@ -68,6 +68,7 @@ def data():
 		d['uuid'] = request.form['uuid']
 		d['mac'] = request.form['mac']
 		d['packet'] = request.form['packet']
+		d['manufacturer'] = request.form['manufacturer']
 		q.append(d)
 		return "OK"
 		
