@@ -50,7 +50,7 @@ def getCompanyName(ID):
     if codes.get(ID) != None:
         return codes.get(ID)
     else:
-        return "Unknown"
+        return "Unknown ({})".format(ID)
 
 # reverse endianness - swap byte order
 def changeEndian(word):
