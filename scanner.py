@@ -45,7 +45,8 @@ def getCompanyName(ID):
         '011b' : "Aruba ({})",
         '00e0' : "Google ({})",
         '015d' : "Estimote ({})",
-        'feaa' : "Eddystone ({})"
+        'feaa' : "Eddystone ({})",
+        '180f' : "Estimote sticker ({})"
     }
     if codes.get(ID) != None:
         ret = codes.get(ID)
