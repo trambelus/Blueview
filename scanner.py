@@ -41,16 +41,17 @@ def pp(data):
 # get company name from ID as string
 def getCompanyName(ID):
     codes = {
-        '004c' : "Apple",
-        '011b' : "Aruba",
-        '00e0' : "Google",
-        '015d' : "Estimote",
-        'feaa' : "Eddystone"
+        '004c' : "Apple ({})",
+        '011b' : "Aruba ({})",
+        '00e0' : "Google ({})",
+        '015d' : "Estimote ({})",
+        'feaa' : "Eddystone ({})"
     }
     if codes.get(ID) != None:
-        return codes.get(ID)
+        ret = codes.get(ID)
     else:
-        return "Unknown ({})".format(ID)
+        ret = "Unknown ({})"
+    return ret.format(ID)
 
 # reverse endianness - swap byte order
 def changeEndian(word):
