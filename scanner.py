@@ -81,7 +81,7 @@ def main():
 						print("Packet: {}\nMAC: {}\nUUID: {}".format(pp(packet), mac_addr, uuid))
 						try:
 							requests.post("http://trambel.us:83/blueview/data", data={"packet":pp(packet), "mac":mac_addr, "uuid":uuid})
-						except ConnectionError:
+						except requests.exceptions.ConnectionError:
 							print("Connection error; stand by.")
 							time.sleep(2)
 
