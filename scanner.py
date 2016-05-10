@@ -7,6 +7,7 @@ import sys
 from ctypes import CDLL, get_errno
 from ctypes.util import find_library
 import requests
+import time
 
 # CONSTANTS from C
 LE_META_EVENT = 0x3e
@@ -78,7 +79,11 @@ def main():
 						uuid = pp(data[-22:-6])
 
 						print("Packet: {}\nMAC: {}\nUUID: {}".format(pp(packet), mac_addr, uuid))
-						requests.post("http://trambel.us:83/blueview/data", data={"packet":pp(packet), "mac":mac_addr, "uuid":uuid})
+						try:
+							requests.post("http://trambel.us:83/blueview/data", data={"packet":pp(packet), "mac":mac_addr, "uuid":uuid})
+						except ConnectionError:
+							print("Connection error; stand by.")
+							time.sleep(2)
 
 	except KeyboardInterrupt:
 		sock.close()

@@ -33,6 +33,10 @@
 	</body>
 
 	<script>
+		var rands = [];
+		for (var i = 0; i < 255; i++) {
+			rands.push(Math.floor(Math.random()*255));
+		}
 		// From http://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
 		String.prototype.hashCode = function() {
 			var hash = 0, i, chr, len;
@@ -45,8 +49,13 @@
 			return hash;
 		};
 
-		function color(packet) {
-			return "#" + ("000000" + packet.hashCode().toString(16).substring(1,7)).slice(-6)
+		function color(val) {
+			//return "#" + ("000000" + packet.hashCode().toString(16).substring(1,7)).slice(-6)
+			// return 'hsl(' + Math.floor(parseInt(val.substring(0,2),16)*360/255) +
+			// ',' + (50+Math.floor(parseInt(val.substring(15,16),16)*50/16)) + '%,' +
+			// (Math.floor(parseInt(val.substring(16,17),16)*50/16)) + '%)';
+			return 'hsl(' + Math.floor(rands[parseInt(val.substring(0,2),16)]*360/255) +
+			',100%,35%)';
 		}
 
 		// tail effect
@@ -61,13 +70,13 @@
 			$.ajax({
 				url: "http://trambel.us:83/blueview/data",
 				complete: function(xhr) {
-					console.log("Updated");
+					//console.log("Updated");
 					var json = JSON.parse(xhr.responseText);
-					console.log(json);
+					//console.log(json);
 					$.each(json, function(index, elem) {
 						$("#log ul").append(
 							$('<li>').attr('class','list-group-item').append(
-								elem.mac + " - " + elem.uuid + " - " + elem.packet
+								elem.mac + " - " + elem.packet
 							).css('color', color(elem.mac))
 						);
 						tailScroll();
